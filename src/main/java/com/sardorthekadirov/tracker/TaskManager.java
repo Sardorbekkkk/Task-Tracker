@@ -15,4 +15,5 @@ public interface TaskManager {
     Long countTaskWithPriority(TaskPriority priority);
     List<String> getTitlesForReport();
 
+    
 }

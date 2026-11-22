@@ -9,4 +9,10 @@ public interface TaskManager {
     void updateTask(Task task);
     void deleteTask(long id);
     List<Task> getAllTasks();
+
+    List<Task> getTasksByStatus(TaskStatus status);
+    List<Task> getTasksSortedByPriority();
+    Long countTaskWithPriority(TaskPriority priority);
+    List<String> getTitlesForReport();
+
 }

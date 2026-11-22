@@ -18,6 +18,9 @@ public class TaskManagerImpl implements TaskManager{
     @Override
     public Task getTaskById(Long id) {
         Task task = tasks.get(id);
+        if(task == null){
+            throw new TaskNotFoundException("Задача с ID" + id + " Не найдена!!!");
+        }
         return task;
     }
 
@@ -28,6 +31,10 @@ public class TaskManagerImpl implements TaskManager{
 
     @Override
     public void deleteTask(long id) {
+        Task task = tasks.get(id);
+        if (task == null){
+            throw new TaskNotFoundException("Задача с ID" + id + " Не найдена!!!");
+        }
         tasks.remove(id);
     }
 

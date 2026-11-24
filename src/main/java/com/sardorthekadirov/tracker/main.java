@@ -1,5 +1,13 @@
 package com.sardorthekadirov.tracker;
 
+import com.sardorthekadirov.tracker.api.client.ApiClient;
+import com.sardorthekadirov.tracker.api.model.RemoteTask;
+import com.sardorthekadirov.tracker.api.service.TaskApi;
+import retrofit2.Call;
+import retrofit2.Response;
+
+import java.io.IOException;
+import java.util.List;
 import java.util.Scanner;
 
 public class main {
@@ -13,6 +21,7 @@ public class main {
             System.out.println("3. Найти по ID");
             System.out.println("4. Изменить статус");
             System.out.println("5. Удалить");
+            System.out.println("6. Скачать задания с сервака ");
             System.out.println("0. Выход");
             numTasks = scanner.nextLine();
             switch (numTasks){
@@ -95,6 +104,23 @@ public class main {
                     }catch (TaskNotFoundException e){
                         System.out.println(e.getMessage());
                         System.out.println();
+                    }break;
+
+                case "6":
+                    TaskApi api = ApiClient.getInstance().API();
+                    Call<List<RemoteTask>> call = api.getAllTask();
+                    try {
+
+                        Response<List<RemoteTask>> response = call.execute();
+
+                        if(response.isSuccessful()){
+                            response.body().forEach(System.out::println);
+                        }else{
+                            System.out.println("Ошибка сервера! Статус: " + response.code());
+                            System.out.println("Не удалось скачать задачи.");
+                        }
+                    }catch (IOException e){
+                        System.out.println(e.getMessage());
                     }break;
 
                 case "0":
